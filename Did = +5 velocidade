@@ -1,0 +1,10 @@
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local speedIncrease = 5 -- Aumento de velocidade a cada morte
+
+local function onDeath()
+    humanoid.WalkSpeed = humanoid.WalkSpeed + speedIncrease
+end
+
+humanoid.Died:Connect(onDeath)
