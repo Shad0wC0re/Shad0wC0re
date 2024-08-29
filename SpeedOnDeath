@@ -1,0 +1,27 @@
+-- LocalScript
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Função para aumentar a velocidade
+local function increaseSpeed()
+    -- Verifica se o jogador ainda possui um personagem
+    if humanoid and humanoid:FindFirstChildOfClass("Humanoid") then
+        local currentWalkSpeed = humanoid.WalkSpeed
+        humanoid.WalkSpeed = currentWalkSpeed + 10 -- Aumenta a velocidade em 10 unidades, ajuste conforme necessário
+    end
+end
+
+-- Função para detectar morte ou reset
+local function onCharacterAdded(newCharacter)
+    character = newCharacter
+    humanoid = character:WaitForChild("Humanoid")
+    
+    -- Conecta eventos de morte e reset
+    humanoid.Died:Connect(function()
+        increaseSpeed()
+    end)
+end
+
+-- Detecta quando o jogador morre
+player.CharacterAdded:Connect(onCharacterAdded)
